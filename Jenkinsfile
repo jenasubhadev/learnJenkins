@@ -1,10 +1,16 @@
+#!/usr/bin/env groovy 
+@Library('jenkins-shared-library')_
+
+
 pipeline {
     agent any
 
     stages {
         stage('Build') {
             steps {
-                echo 'Hello World'
+                script {
+                    buildJar()
+                }
             }
         }
         stage('Test') {
