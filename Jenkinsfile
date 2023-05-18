@@ -15,7 +15,9 @@ pipeline {
         }
         stage('Test') {
             steps {
-                TimeMetrics.calculateStageTime("Test")
+                script {
+                    TimeMetrics.calculateStageTime("Test")
+                }
             }
         }
         stage('Deploy') {
