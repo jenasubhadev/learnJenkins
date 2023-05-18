@@ -54,19 +54,6 @@ post {
 }
 }
 
-def generateTimingReport1() {
-  println "----- Timing Report -----"
-  println "Stage Times:"
-  TimeMetrics.stageTimes.each { stage, duration ->
-    println "Stage '${stage}' took ${duration} milliseconds"
-  }
-  println "Step Times:"
-  TimeMetrics.stepTimes.each { step, duration ->
-    println "Step '${step}' took ${duration} milliseconds"
-  }
-  println "-------------------------"
-}
-
 def generateTimingReport() {
   def reportContent = """
     <html>
