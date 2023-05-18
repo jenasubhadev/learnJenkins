@@ -15,7 +15,7 @@ pipeline {
         }
         stage('Test') {
             steps {
-                echo 'Hello Test'
+                TimeMetrics.calculateStageTime("Test")
             }
         }
         stage('Deploy') {
@@ -24,4 +24,11 @@ pipeline {
             }
         }
     }
+  post {
+    always {
+      script {
+        generateTimingReport()
+      }
+    }
+  }
 }
