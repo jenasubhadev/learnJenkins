@@ -19,7 +19,7 @@ pipeline {
         stage('Test') {
             steps {
                 script {
-                    TimeMetrics.calculateStageTime("Build"){
+                    TimeMetrics.calculateStageTime("Test"){
                         buildJar("SnehaAgain")
                     }
                 }
@@ -28,7 +28,7 @@ pipeline {
         stage('Deploy') {
             steps {
                 script {
-                    TimeMetrics.calculateStageTime("Build"){
+                    TimeMetrics.calculateStageTime("Deploy"){
                         buildJar("DeployAgain")
                     }
                 }
