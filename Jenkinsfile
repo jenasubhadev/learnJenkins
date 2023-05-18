@@ -9,14 +9,14 @@ pipeline {
         stage('Build') {
             steps {
                 script {
-                    buildJar()
+                    buildJar("Sesha")
                 }
             }
         }
         stage('Test') {
             steps {
                 script {
-                    TimeMetrics.calculateStageTime("Test")
+                    buildJar("Sneha")
                 }
             }
         }
