@@ -14,7 +14,10 @@ pipeline {
                         sleep(time: 10, unit: 'SECONDS')
                         buildJar("SeshaAgain")
                       }
-                        
+                      TimeMetrics.calculateStepTime("Step 2 in Stage 1"){
+                        sleep(time: 5, unit: 'SECONDS')
+                        buildJar("SeshaAgain")
+                      }   
                     }
                     
                 }
