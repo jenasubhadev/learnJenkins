@@ -1,6 +1,6 @@
 #!/usr/bin/env groovy 
-@Library('jenkins-shared-library')_
-
+@Library('jenkins-shared-library')
+import org.example.TimeMetrics
 
 pipeline {
     agent any
@@ -9,21 +9,50 @@ pipeline {
         stage('Build') {
             steps {
                 script {
-                    buildJar("Sesha")
+                    TimeMetrics.calculateStageTime("Build"){
+                        buildJar("SeshaAgain")
+                    }
+                    
                 }
             }
         }
         stage('Test') {
             steps {
                 script {
-                    buildJar("Sneha")
+                    TimeMetrics.calculateStageTime("Build"){
+                        buildJar("SnehaAgain")
+                    }
                 }
             }
         }
         stage('Deploy') {
             steps {
-                echo 'Hello Deploy'
+                script {
+                    TimeMetrics.calculateStageTime("Build"){
+                        buildJar("DeployAgain")
+                    }
+                }
             }
         }
     }
+  post {
+    always {
+      script {
+        generateTimingReport()
+      }
+    }
+  }
+}
+
+def generateTimingReport() {
+  println "----- Timing Report -----"
+  println "Stage Times:"
+  TimeMetrics.stageTimes.each { stage, duration ->
+    println "Stage '${stage}' took ${duration} milliseconds"
+  }
+  println "Step Times:"
+  TimeMetrics.stepTimes.each { step, duration ->
+    println "Step '${step}' took ${duration} milliseconds"
+  }
+  println "-------------------------"
 }
