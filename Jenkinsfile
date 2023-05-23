@@ -10,13 +10,13 @@ pipeline {
             steps {
                 script {
                     TimeMetrics.calculateStageTime("Build"){
-                      TimeMetrics.calculateStepTime("Build", "Step 1 in Stage 1"){
+                      TimeMetrics.calculateStepTime('Build','Step 1 in Stage 1'){
                         sleep(time: 10, unit: 'SECONDS')
-                        buildJar("SeshaAgain")
+                        buildJar("Step1")
                       }
                       TimeMetrics.calculateStepTime("Build", "Step 2 in Stage 1"){
                         sleep(time: 5, unit: 'SECONDS')
-                        buildJar("SeshaAgain")
+                        buildJar("Step2")
                       }   
                     }
                     
