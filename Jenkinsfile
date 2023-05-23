@@ -66,19 +66,19 @@ def generateTimingReport() {
       <ul>
   """
 
-  TimeMetrics.stageTimes.each { stage, duration ->
-      reportContent += "<li>Stage '${stage}' took ${duration} milliseconds</li>"
+  TimeMetrics.stageTimes.each { stage, stage_duration ->
+      reportContent += "<li>Stage '${stage}' took ${stage_duration} milliseconds</li>"
       def innerMap = TimeMetrics.stepTimes[stage]
       
       if (!innerMap.empty) {
-      reportContent += """
-        </ul>
-        <h2>Step Times:</h2>
-        <ul>
-    """
-          innerMap.each { step, duration ->
-              reportContent += "<li>Step '${step}' took ${duration} milliseconds</li>"
-          }
+        reportContent += """
+          </ul>
+          <h2>Step Times:</h2>
+          <ul>
+        """
+        innerMap.each { step, step_duration ->
+            reportContent += "<li>Step '${step}' took ${step_duration} milliseconds</li>"
+        }
       }
   }
 
