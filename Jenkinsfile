@@ -10,11 +10,11 @@ pipeline {
             steps {
                 script {
                     TimeMetrics.calculateStageTime("Build"){
-                      TimeMetrics.calculateStepTime("Step 1 in Stage 1"){
+                      TimeMetrics.calculateStepTime("Build", "Step 1 in Stage 1"){
                         sleep(time: 10, unit: 'SECONDS')
                         buildJar("SeshaAgain")
                       }
-                      TimeMetrics.calculateStepTime("Step 2 in Stage 1"){
+                      TimeMetrics.calculateStepTime("Build", "Step 2 in Stage 1"){
                         sleep(time: 5, unit: 'SECONDS')
                         buildJar("SeshaAgain")
                       }   
@@ -67,17 +67,19 @@ def generateTimingReport() {
   """
 
   TimeMetrics.stageTimes.each { stage, duration ->
-    reportContent += "<li>Stage '${stage}' took ${duration} milliseconds</li>"
-  }
-
-  reportContent += """
-      </ul>
-      <h2>Step Times:</h2>
-      <ul>
-  """
-
-  TimeMetrics.stepTimes.each { step, duration ->
-    reportContent += "<li>Step '${step}' took ${duration} milliseconds</li>"
+      reportContent += "<li>Stage '${stage}' took ${duration} milliseconds</li>"
+      def innerMap = TimeMetrics.stepTimes[stage]
+      
+      if (!innerMap.empty) {
+      reportContent += """
+        </ul>
+        <h2>Step Times:</h2>
+        <ul>
+    """
+          innerMap.each { step, duration ->
+              reportContent += "<li>Step '${step}' took ${duration} milliseconds</li>"
+          }
+      }
   }
 
   reportContent += """
